@@ -13,7 +13,7 @@ func main() {
 
 func stringPointer() {
 	s := "good bye"
-	var p *string = &s
+	var p *string = &s // p是一个指针，存储的s的地址
 	*p = "ciao"
 	fmt.Printf("Here is the pointer p: %p\n", p)
 	fmt.Printf("Here is the string *p: %s\n", *p)
