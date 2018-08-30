@@ -42,6 +42,7 @@ func getX2AndX3_2(input int)(x2 int, x3 int) {
 	return
 }
 
+
 // practice
 func multReturnVal(a int, b int)(sum int, multiplied int, difference int) {
 	sum = a + b
@@ -70,6 +71,7 @@ func errorReturnVal() {
 
 func MySqrt(f float64) (float64, error) {
 	if f < 0 {
+		
 		return float64(math.NaN()), errors.New("I won't be able to do a sqrt of negative number!")
 	}
 	return math.Sqrt(f), nil
