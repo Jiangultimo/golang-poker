@@ -7,6 +7,7 @@ import (
 )
 
 func init() {
+	// 将日志输出到标准输出
 	log.SetOutput(os.Stdout)
 }
 

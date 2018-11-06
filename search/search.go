@@ -5,6 +5,7 @@ import (
 	"sync"
 )
 
+// 注册用于搜索的匹配器的映射
 var matchers = make(map[string]Matcher)
 
 func Run(searchTerm string) {
