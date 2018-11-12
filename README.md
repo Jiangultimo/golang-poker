@@ -20,3 +20,8 @@ Golang 征途
   1. new(T) 为每个新的类型T分配一片内存，初始化为 0 并且返回类型为*T的内存地址：这种方法 返回一个指向类型为 T，值为 0 的地址的指针，它适用于值类型如数组和结构体；它相当于`&T{}`。 
   2. make(T) 返回一个类型为 T 的初始值，它只适用于3种内建的引用类型：切片、map 和 channel。
   3. 改变切片长度的过程称之为切片重组**reslicing**
+- map是一种特殊的数据结构：一种元素对（pair）的无序集合，pair的一个元素是key，对应的另一个元素的是value，所以这个结构也称为关联数组或字典。map这种数据结构在其他编程语言中也称为字典、hash和HashTable等（对比`JSON`）
+  1. map是引用类型，内存用make方法来分配
+  2. map初始化`var map1 = make(map[keytype]valyetype)`，或简写为`map1 := make(map[keytype]valuetype)
+  3. **不要使用new，永远用make来构造map**
+  
