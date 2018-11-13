@@ -24,4 +24,4 @@ Golang 征途
   1. map是引用类型，内存用make方法来分配
   2. map初始化`var map1 = make(map[keytype]valyetype)`，或简写为`map1 := make(map[keytype]valuetype)
   3. **不要使用new，永远用make来构造map**
-- 
+- struct
