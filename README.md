@@ -26,3 +26,8 @@ Golang 征途
   3. **不要使用new，永远用make来构造map**
 - struct
   1. 试图`make()`一个结构体变量，会引发一个编译错误；`new()`一个映射并试图使用数据填充它，将会引发运行时错误。
+- 方法：Go方法是作用在接收者（`receiver`）上的一个函数，接收者是某种类型的变量。因此方法是一种特殊类型的函数。
+  ```go
+  func (recv receiver_type) methodName(parameter_list) (return_value_list) {...}
+  ```
+  `recv`就像面向对象语言中的`this`或`self`
