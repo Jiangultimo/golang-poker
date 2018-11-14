@@ -25,3 +25,4 @@ Golang 征途
   2. map初始化`var map1 = make(map[keytype]valyetype)`，或简写为`map1 := make(map[keytype]valuetype)
   3. **不要使用new，永远用make来构造map**
 - struct
+  1. 试图`make()`一个结构体变量，会引发一个编译错误；`new()`一个映射并试图使用数据填充它，将会引发运行时错误。
