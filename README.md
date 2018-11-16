@@ -31,3 +31,4 @@ Golang 征途
   func (recv receiver_type) methodName(parameter_list) (return_value_list) {...}
   ```
   `recv`就像面向对象语言中的`this`或`self`
+  1. 如果类型定义了`String()`方法，它会被用在`fmt.Printf()`中生成默认的输出：等同于使用格式化描述符`%V`产生的输出。`fmt.Print()`和`fmt.Println()`也会自动使出`String()`方法
