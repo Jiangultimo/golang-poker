@@ -35,3 +35,7 @@ Golang 征途
 - GC:通过调用`runtime.GC()`函数可以显示的触发GC。
 - 接口：Go语言中的接口痘痕间断，通常它们会包含0个，最多3个方法。
   1. 添加[**第一个例子：使用`Sorter`接口排序**](./interface/sortmain.go)
+- 空接口或者最小接口：不包含任何方法，它对实现不做任何要求
+  ```go
+  type Any interface{}
+  ```
