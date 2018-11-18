@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"./struct_pack/structPack.go"
+	"./struct_pack"
 )
 
 func main() {
