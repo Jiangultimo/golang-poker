@@ -34,3 +34,4 @@ Golang 征途
   1. 如果类型定义了`String()`方法，它会被用在`fmt.Printf()`中生成默认的输出：等同于使用格式化描述符`%V`产生的输出。`fmt.Print()`和`fmt.Println()`也会自动使出`String()`方法
 - GC:通过调用`runtime.GC()`函数可以显示的触发GC。
 - 接口：Go语言中的接口痘痕间断，通常它们会包含0个，最多3个方法。
+  1. 添加[**第一个例子：使用`Sorter`接口排序**](./interface/sortmain.go)
