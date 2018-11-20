@@ -1,0 +1,2 @@
+I am read write file1 input!
+haha!
