@@ -55,3 +55,5 @@ Golang 征途
   ```go
   func FprintF(w io.Writer, format string, a ...interface{}) (n int, err error)
   ```
+- JSON数据格式：
+  1. 序列化：是在内存中巴数据转换成指定格式`(data -> string)`，反之亦然`(string -> data structure)`
