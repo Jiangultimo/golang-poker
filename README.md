@@ -51,3 +51,7 @@ Golang 征途
   
   在读文件的时候，文件的权限是被忽略的。
 - 切片提供了Go中处理I/O缓冲的标准方式，[在一个切片缓冲内使用无线for循环读取文件](./professional/RWData/cat2.go)
+- `fmt.Fprintf()`函数签名为：
+  ```go
+  func FprintF(w io.Writer, format string, a ...interface{}) (n int, err error)
+  ```
