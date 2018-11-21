@@ -32,4 +32,4 @@ func main() {
 		}
 		cat(bufio.NewReader(f))
 	}
-}
+} // 运行 go run cat.go c_filecopy.txt 查看效果
