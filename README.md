@@ -57,3 +57,4 @@ Golang 征途
   ```
 - JSON数据格式：
   1. 序列化：是在内存中巴数据转换成指定格式`(data -> string)`，反之亦然`(string -> data structure)`
+- Gob是Go自己的以二进制形式序列化和反序列化程序数据的格式；可以在`encoding`包中找到。这种格式的数据简称为Gob（即Go binary的指定）。
