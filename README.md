@@ -62,4 +62,20 @@ Golang 征途
   ```go
   err := errors.New("math - square root of negative number")
   ```
-  
+- 当发生像数组下标越界或者类型断言失败这样的运行错误时，Go运行时会触发运行时panic，伴随程序崩溃抛出一个`runtime.Error`接口类型的值。
+- `recover`只能在defer修饰的函数中使用：用于取得panic调用中传递过来的错误值，如果正常执行，调用`recover`会返回nil，且没有其他效果
+  ```go
+  func protect(g func()) {
+    defer func() {
+  	    log.Println("done")
+	    if err := recover(); err != nil {
+   	        log.Printf("run time panic: %v", err)
+   	    }
+    }()
+    log.Println("start")
+    g() // posiible runtime-error
+  }
+  ```
+- 所有自定义包实现者应该遵守的最佳实践：
+  1. 在包内部，总是应该从panic中recover：不允许显示的超出包范围的panic()
+  2. 像包的调用者返回错误值（而不是panic）
