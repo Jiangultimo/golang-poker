@@ -17,7 +17,7 @@ func cat(f *os.File) {
 		case nr == 0: // EOF
 			return
 		case nr > 0:
-			if nw, ew := os.Stdout.Write(buf[0:nr]);nw != nr {
+			if nw, ew := os.Stdout.Write(buf[0:nr]); nw != nr {
 				fmt.Fprintf(os.Stderr, "cat: error writing: %s\n", ew.Error())
 			}
 		}
@@ -25,7 +25,7 @@ func cat(f *os.File) {
 }
 
 func main() {
-	flag.Parse() // scans the arg list and sets up flags
+	flag.Parse()          // scans the arg list and sets up flags
 	if flag.NArg() == 0 { // 如果没有参数，直接打印命令行输入的内容
 		cat(os.Stdin)
 	}

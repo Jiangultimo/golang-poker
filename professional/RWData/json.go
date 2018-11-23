@@ -8,16 +8,16 @@ import (
 )
 
 type Address struct {
-	Type string
-	City string
+	Type    string
+	City    string
 	Country string
 }
 
 type VCard struct {
 	FirstName string
-	LastName string
-	Address []*Address
-	Remark string
+	LastName  string
+	Address   []*Address
+	Remark    string
 }
 
 func main() {

@@ -15,6 +15,6 @@ func main() {
 	fmt.Println("Please enter some input:")
 	input, err = inputReader.ReadString('\n') // 遇到 \n 读取结束
 	if err == nil {
-		fmt.Printf("The input was: %s\n", input	)
+		fmt.Printf("The input was: %s\n", input)
 	}
 }

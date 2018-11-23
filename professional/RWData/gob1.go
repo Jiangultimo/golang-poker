@@ -9,7 +9,7 @@ import (
 
 type P struct {
 	X, Y, Z int
-	Name string
+	Name    string
 }
 
 type Q struct {
@@ -20,7 +20,7 @@ type Q struct {
 func main() {
 	// 初始化encoder和decoder
 	// Normally enc and dec would be bound to network connections and the encoder and decoder would run in defferent processes
-	var network bytes.Buffer // Stand-in for a network connection
+	var network bytes.Buffer        // Stand-in for a network connection
 	enc := gob.NewEncoder(&network) // will write to network
 	dec := gob.NewDecoder(&network) // will read from network
 	// Encode (send) the value.
