@@ -84,3 +84,23 @@ Golang 征途
   ```bash
   /usr/bin/time -f '%Uu %Ss %er %MkB %C' "%@"
   ```
+- **不要通过共享内存来通信，而通过通信来共享内存。**
+  1. 当`main()`函数返回的时候，程序退出；它不会等待任何其他非main协程的结束。
+  2. 默认情况下，通信是同步且无缓冲的：在有接受者接收数据之前，发送不会结束。
+  3. 带缓冲的通道
+      ```go
+      buf := 100
+      ch1 := make(chan string, buf)
+      ```
+     在缓冲满载之前，给一个带缓冲的通道发送数据是不会阻塞的，而从通道读取数据也不会阻塞，直到缓冲空了。
+  4. `for`循环的`range`语句可以用在通道上`ch`上，就可以从通道中取值：
+      ```go
+      for v := range ch {
+ 	      fmt.Printf("The value is %v\n", v)
+      }
+      ```
+  5. 通道类型可以用注解来表示它只发送或者只接收：
+      ```go
+      var send_only chan <- int // channel can only receive data
+      var recv_only <-chan int // channel can only send data
+      ```
