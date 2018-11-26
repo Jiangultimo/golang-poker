@@ -104,3 +104,13 @@ Golang 征途
       var send_only chan <- int // channel can only receive data
       var recv_only <-chan int // channel can only send data
       ```
+- 使用select切换协程
+- 使用锁的情景：
+  1. 访问共享数据结构中的缓存信息
+  2. 保存应用程序上下文和状态信息数据
+- 使用通道的情景：
+  1. 与异步操作的结果进行交互
+  2. 分发任务
+  3. 传递数据所有权
+- 惰性求值：只在需要时进行求值，同时保留相关变量资源（内存和CPU）
+- Futures：在使用某一个值前需要先对其计算，这种情况下，你就可以在另一个处理器上进行该值的计算，到使用时，该值已经计算完毕了。
