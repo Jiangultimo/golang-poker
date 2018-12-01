@@ -35,12 +35,24 @@ Golang 征途
   ```
   `recv`就像面向对象语言中的`this`或`self`
   1. 如果类型定义了`String()`方法，它会被用在`fmt.Printf()`中生成默认的输出：等同于使用格式化描述符`%V`产生的输出。`fmt.Print()`和`fmt.Println()`也会自动使出`String()`方法
+  2. 指针接收者
 - GC:通过调用`runtime.GC()`函数可以显示的触发GC。
 - 接口：Go语言中的接口痘痕间断，通常它们会包含0个，最多3个方法。
   1. 添加[**第一个例子：使用`Sorter`接口排序**](./interface/sortmain.go)
 - 空接口或者最小接口：不包含任何方法，它对实现不做任何要求
   ```go
   type Any interface{}
+  ```
+- 断言选择
+  ```go
+  switch v := i.(type) {
+  case T:
+      // v 的类型为 T
+  case S:
+      // v 的类型为 S
+  default:
+      // 没有匹配，v 与 i 的类型相同
+  }
   ```
   
 **PROFESSIONAL**
