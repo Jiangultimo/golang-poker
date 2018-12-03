@@ -16,3 +16,22 @@ export PATH=$PATH:$GOPATH/bin
 ```
 
 ### 包路径
+
+### 包名
+```bash
+package 名称
+```
+- 一个包中的所有文件都必须使用使用想用的`名称`
+- GO约定包名为导入路径的最后一个元素：作为"crypto/rot13"导入的包应命名为rot13
+
+### 测试
+Go拥有一个轻量级的测试框架，它由go test命令和testing包构成。
+
+### 远程包
+- 若在包的导入路径中包含了代码仓库的URL，go get 就会自动地获取、构建并安装：
+  ```bash
+  $ go get github.com/golang/example/hello
+  $ $GOPATH/bin/hello
+  Hello, Go examples!
+  ```
+- 若指定的包不在工作空间中，`go get`就会将它放到GOPATH指定的第一个工作间内。（若该包已经存在，`go get`就会跳过远程获取，其行为与`go install`相同）
