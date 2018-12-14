@@ -127,3 +127,56 @@ Golang 征途
   3. 传递数据所有权
 - 惰性求值：只在需要时进行求值，同时保留相关变量资源（内存和CPU）
 - Futures：在使用某一个值前需要先对其计算，这种情况下，你就可以在另一个处理器上进行该值的计算，到使用时，该值已经计算完毕了。
+
+**Web Serve**
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+)
+
+type MyMux struct {
+}
+
+func (p *MyMux) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path == "/" {
+		sayHelloname(w, r)
+		return
+	}
+	http.NotFound(w, r)
+	return
+}
+
+func sayHelloname(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello myroute!")
+}
+
+func main() {
+	mux := &MyMux{}
+	http.ListenAndServe(":9090", mux)
+}
+```
+
+执行流程：
+- 首先调用Http.HandleFunc
+  1. 调用DefaultServeMux的HandleFunc
+  2. 调用DefaultServeMux的Handle
+  3. 往DefaultServeMux的map[string]muxEntry中增加对应的handler和路由规
+- 其次调用http.ListenAndServe(":9090", nil)
+  1. 实力化Server
+  2. 调用Server的ListenAndServe()
+  3. 调用net.Listen("tcp", addr)监听端口
+  4. 启动一个for循环，在循环体中Accept请求
+  5. 对每个请求实例化一个Conn，并且开启一个goroutine为这个请求进行服务 go.c.serve()
+  6. 对每个请求的内容 w, err := c.readRequest()
+  7. 判断handler是否为空，如果没有设置handler（上面的代码中没有设置），handler就设置为DefaultServeMux
+  8. 调用handler的ServeHTTP
+  9. 在上面的代码中，下一步就进入到DefaultServeMux.ServeHttp
+  10. 根据request选择handler，并且进入到这个handler的ServerHTTP: `mux.handler(r).ServerHTTP(w, r)`
+  11. 选择handler：
+    - 判断是否有路由能满足这个request（遍历循环ServeMux的muxEntry）
+    - 如果有路由满足，调用这个路由handler的ServeHTTP
+    - 如果没有路由满足，调用NotFoundHandler的ServeHTTP
+    
