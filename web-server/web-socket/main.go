@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"log"
 	"net/http"
@@ -8,24 +9,35 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-func Echo(ws *wesocket.Conn) {
-	var err error
+var (
+	newline = []byte{'\n'}
+	space = []byte{' '}
+)
 
+func Echo(ws *websocket.Conn) {
 	for {
-		var reply string
-		if err = websocket.Message.Receive(ws, &reply); err != nil {
-			fmt.Println("Can't receive")
+		_, message, err := ws.ReadMessage()
+		if err != nil {
+			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
+				log.Printf("error: %v", err)
+			}
 			break
 		}
-		fmt.Println("Received back from client: " + reply)
-
-		msg := "Received: " + reply
-		fmt.Println("Sending to client: " + msg)
-
-		if err = websocket.Message.Send(ws, msg); err != nil {
-			fmt.Println("Can't Send")
-			break
-		}
+		message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
+		//var reply string
+		//if err = websocket.Message.Receive(ws, &reply); err != nil {
+		//	fmt.Println("Can't receive")
+		//	break
+		//}
+		//fmt.Println("Received back from client: " + reply)
+		//
+		//msg := "Received: " + reply
+		//fmt.Println("Sending to client: " + msg)
+		//
+		//if err = websocket.Message.Send(ws, msg); err != nil {
+		//	fmt.Println("Can't Send")
+		//	break
+		//}
 	}
 }
 func main() {
