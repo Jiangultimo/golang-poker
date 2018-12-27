@@ -1,48 +1,35 @@
 package main
 
 import (
-	"bytes"
-	"fmt"
+	"flag"
 	"log"
 	"net/http"
-
-	"github.com/gorilla/websocket"
 )
 
-var (
-	newline = []byte{'\n'}
-	space = []byte{' '}
-)
+var addr = flag.String("addr", ":8080", "http service address")
 
-func Echo(ws *websocket.Conn) {
-	for {
-		_, message, err := ws.ReadMessage()
-		if err != nil {
-			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
-				log.Printf("error: %v", err)
-			}
-			break
-		}
-		message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
-		//var reply string
-		//if err = websocket.Message.Receive(ws, &reply); err != nil {
-		//	fmt.Println("Can't receive")
-		//	break
-		//}
-		//fmt.Println("Received back from client: " + reply)
-		//
-		//msg := "Received: " + reply
-		//fmt.Println("Sending to client: " + msg)
-		//
-		//if err = websocket.Message.Send(ws, msg); err != nil {
-		//	fmt.Println("Can't Send")
-		//	break
-		//}
+func serveHome(w http.ResponseWriter, r *http.Request) {
+	log.Println(r.URL)
+	if r.URL.Path != "/" {
+		http.Error(w, "Not found", http.StatusFound)
+		return
 	}
+	if r.Method != "GET" {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	}
+	http.ServeFile(w, r, "index.html")
 }
+
 func main() {
-	http.Handle("/", websocket.Handler(Echo))
-	if err := http.ListenAndServe(":1234", nil); err != nil {
-		log.Fatal("ListenAndServer:", err)
+	flag.Parse()
+	hub := newHub()
+	go hub.run()
+	http.HandleFunc("/", serveHome)
+	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
+		serveWs(hub, w, r)
+	})
+	err := http.ListenAndServe(*addr, nil)
+	if err != nil {
+		log.Fatal("ListenAndServer: ", err)
 	}
 }

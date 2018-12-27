@@ -7,32 +7,86 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+<style type="text/css">
+    html {
+        overflow: hidden;
+    }
+    body {
+        overflow: hidden;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        background: gray;
+    }
+    #log {
+        background: white;
+        margin: 0;
+        padding: 0.5em 0.5em 0.5em 0.5em;
+        position: absolute;
+        top: 0.5em;
+        left: 0.5em;
+        right: 0.5em;
+        bottom: 3em;
+        overflow: auto;
+    }
+    #form {
+        padding: 0 0.5em 0 0.5em;
+        margin: 0;
+        position: absolute;
+        bottom: 1em;
+        left: 0px;
+        width: 100%;
+        overflow: hidden;
+    }
+</style>
 <body>
 <h1>WebSocket Echo Test</h1>
-<form>
-    <p>Message: <input id="message" type="text" value="Hello, World!" /></p>
+<div id="log"></div>
+<form id="form">
+    <input type="submit" value="Send" />
+    <input type="text" id="msg" size="64"/>
 </form>
 <button onClick="send();">Send Message</button>
 <script>
-    var sock = null;
-    var wsuri = "ws://127.0.0.1:1234";
-
     window.onload = function() {
-        console.log('window onloaded');
-        sock = new WebSocket(wsuri);
-        sock.onopen = function () {
-            console.log('connected to' + wsuri);
+        var conn;
+        var msg = document.getElementById('msg');
+        var log = document.getElementById('log');
+
+        function appendLog(item) {
+            var doScroll = log.scrollTop > log.scrollHeight - log.clientHeight - 1;
+            log.appendLog(item);
+            if (doScroll) {
+                log.scrollTop = log.scrollHeight - log.clientHeight;
+            }
         }
-        sock.onclose = function (e) {
-            console.log('connection closed (' + e.code + ')');
+
+        document.getElementById('form').onsubmit = function() {
+            if(!conn) {
+                return false;
+            }
+            if(!msg.value) {
+                return false;
+            }
+        };
+
+        if(window.WebSocket) {
+            conn = new WebSocket('ws://' + window.location.host + '/ws');
+            conn.onclose = function(e) {
+                var item = document.createElement('div');
+                item.innerHTML = '<b>Connection Closed</b>';
+                appendLog(item);
+            };
+            conn.onmessage = function(e) {
+                var messages = e.data.split('\n');
+                for (var i = 0; i < messages.length; i++) {
+                    var item = document.createElement('div');
+                    item.innerText = messages[i];
+                    appendLog(item);
+                }
+            };
         }
-        sock.onmessage = function(e) {
-            console.log('message received: ' + e.data)
-        }
-    };
-    function send() {
-        var msg = document.getElementById('message').value;
-        sock.send(msg)
     }
 </script>
 </body>
